@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Artigos — Dra. Michelle Abdo · Neurologia e Doenças Neuromusculares</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink:      #0d3d36;
+      --slate:    #2e5c52;
+      --mist:     #7aaa9e;
+      --paper:    #f4f8f7;
+      --white:    #ffffff;
+      --teal:     #2e7d8c;
+      --teal-lt:  #d6eaee;
+      --gold:     #b8965a;
+      --border:   #ccddd9;
+      --radius:   4px;
+      --display:  'Cormorant Garamond', Georgia, serif;
+      --body:     'Inter', system-ui, sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--body); color: var(--ink); background: var(--white); line-height: 1.6; }
+    a { color: inherit; text-decoration: none; }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 200;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5%; height: 68px;
+    }
+    .nav-brand { font-family: var(--display); font-size: 1.15rem; font-weight: 600; color: var(--ink); }
+    .nav-brand span { color: var(--teal); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-size: 0.8rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--slate); transition: color .2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--teal); }
+    .nav-cta { background: var(--teal); color: var(--white) !important; padding: .45rem 1.1rem; border-radius: var(--radius); font-size: 0.78rem !important; letter-spacing: 0.06em !important; transition: background .2s !important; }
+    .nav-cta:hover { background: #246874 !important; }
+
+    /* PAGE HEADER */
+    .page-header {
+      background: var(--ink);
+      padding: 4.5rem 7% 3.5rem;
+    }
+    .page-header .eyebrow {
+      font-size: 0.72rem; font-weight: 500; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 1rem;
+    }
+    .page-header h1 {
+      font-family: var(--display); font-size: clamp(2.2rem, 4vw, 3.4rem);
+      font-weight: 400; color: var(--white); line-height: 1.1; margin-bottom: 1rem;
+    }
+    .page-header h1 em { font-style: italic; color: var(--teal-lt); }
+    .page-header p { font-size: 0.95rem; font-weight: 300; color: var(--mist); max-width: 52ch; }
+
+    /* FILTER BAR */
+    .filter-bar {
+      background: var(--paper);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 7%;
+      display: flex; align-items: center; gap: .6rem; flex-wrap: wrap;
+    }
+    .filter-label { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mist); margin-right: .4rem; }
+    .filter-btn {
+      font-size: 0.75rem; font-weight: 500; letter-spacing: 0.06em;
+      padding: .35rem .9rem; border-radius: 20px;
+      border: 1px solid var(--border); background: var(--white); color: var(--slate);
+      cursor: pointer; transition: all .15s;
+    }
+    .filter-btn:hover { border-color: var(--teal); color: var(--teal); }
+    .filter-btn.active { background: var(--teal); color: var(--white); border-color: var(--teal); }
+
+    /* ARTICLE GRID */
+    .articles-section { padding: 3.5rem 7% 5rem; }
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    .article-card {
+      border: 1px solid var(--border); border-radius: var(--radius);
+      background: var(--white); overflow: hidden;
+      cursor: pointer; transition: box-shadow .2s, border-color .2s;
+      display: flex; flex-direction: column;
+    }
+    .article-card:hover { border-color: var(--teal); box-shadow: 0 4px 24px rgba(46,125,140,.12); }
+    .card-tag {
+      font-size: 0.66rem; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--teal);
+      background: var(--teal-lt); padding: .3rem .7rem;
+      display: inline-block; margin: 1.5rem 1.5rem 0;
+      border-radius: 20px; align-self: flex-start;
+    }
+    .card-body { padding: 1rem 1.5rem 1.5rem; flex: 1; display: flex; flex-direction: column; }
+    .card-body h2 { font-size: 1.05rem; font-weight: 600; color: var(--ink); margin-bottom: .6rem; line-height: 1.35; }
+    .card-body p { font-size: 0.85rem; font-weight: 300; color: var(--slate); line-height: 1.7; flex: 1; }
+    .card-footer {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .card-read { font-size: 0.75rem; font-weight: 600; color: var(--teal); letter-spacing: 0.06em; text-transform: uppercase; }
+    .card-arrow { color: var(--teal); font-size: 1rem; }
+
+    /* MODAL */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 500;
+      background: rgba(13,61,54,.55); backdrop-filter: blur(3px);
+      align-items: flex-start; justify-content: center;
+      overflow-y: auto; padding: 2rem 1rem;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--white); border-radius: 6px;
+      max-width: 720px; width: 100%;
+      margin: auto;
+      position: relative;
+      box-shadow: 0 24px 64px rgba(0,0,0,.2);
+    }
+    .modal-header {
+      background: var(--ink); padding: 2.5rem 2.5rem 2rem;
+      border-radius: 6px 6px 0 0;
+    }
+    .modal-tag {
+      font-size: 0.66rem; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: .8rem;
+    }
+    .modal-header h2 {
+      font-family: var(--display); font-size: clamp(1.5rem, 3vw, 2.1rem);
+      font-weight: 400; color: var(--white); line-height: 1.15;
+    }
+    .modal-close {
+      position: absolute; top: 1.2rem; right: 1.2rem;
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.2);
+      background: transparent; color: var(--mist);
+      font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: background .15s;
+    }
+    .modal-close:hover { background: rgba(255,255,255,.1); color: var(--white); }
+    .modal-body { padding: 2.5rem; }
+    .modal-body h3 {
+      font-size: 1rem; font-weight: 600; color: var(--ink);
+      margin: 1.8rem 0 .6rem; padding-top: 1.8rem;
+      border-top: 1px solid var(--border);
+    }
+    .modal-body h3:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+    .modal-body p { font-size: 0.9rem; font-weight: 300; color: var(--slate); line-height: 1.8; margin-bottom: .8rem; }
+    .modal-body ul, .modal-body ol { padding-left: 1.5rem; margin-bottom: .8rem; }
+    .modal-body li { font-size: 0.9rem; font-weight: 300; color: var(--slate); line-height: 1.75; margin-bottom: .2rem; }
+    .modal-body strong { font-weight: 600; color: var(--ink); }
+    .modal-cta {
+      margin-top: 2rem; padding: 1.5rem 2.5rem;
+      background: var(--paper); border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: gap; gap: 1rem;
+      border-radius: 0 0 6px 6px;
+    }
+    .modal-author { font-size: 0.78rem; color: var(--mist); line-height: 1.6; }
+    .modal-author strong { display: block; color: var(--slate); font-weight: 600; margin-bottom: .2rem; }
+    .btn-wpp-sm {
+      display: flex; align-items: center; gap: .5rem;
+      background: #25d366; color: #fff;
+      padding: .65rem 1.2rem; border-radius: var(--radius);
+      font-size: 0.78rem; font-weight: 600; white-space: nowrap;
+      transition: background .2s; text-decoration: none;
+    }
+    .btn-wpp-sm:hover { background: #1fb254; }
+
+    /* HIDDEN for filter */
+    .article-card[data-hidden="true"] { display: none; }
+
+    /* MOBILE */
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .modal-body { padding: 1.5rem; }
+      .modal-header { padding: 1.8rem 1.5rem 1.5rem; }
+      .modal-cta { flex-direction: column; align-items: flex-start; }
+      .articles-section { padding: 2rem 5% 4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-brand">Dra. Michelle <span>Abdo</span></span>
+  <ul class="nav-links">
+    <li><a href="index.html">Início</a></li>
+    <li><a href="index.html#especialidades">Especialidades</a></li>
+    <li><a href="index.html#formacao">Formação</a></li>
+    <li><a href="index.html#consultas">Consultas</a></li>
+    <li><a href="#" class="active">Artigos</a></li>
+    <li><a href="https://api.whatsapp.com/send?phone=5511940414718&text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20consulta%20com%20Dra.%20Michelle" class="nav-cta">Agendar</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <p class="eyebrow">Conteúdo científico</p>
+  <h1>Artigos & <em>Publicações</em></h1>
+  <p>Informações baseadas em evidências sobre doenças neuromusculares — para pacientes, familiares e profissionais de saúde.</p>
+</div>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <span class="filter-label">Filtrar por</span>
+  <button class="filter-btn active" data-filter="all">Todos</button>
+  <button class="filter-btn" data-filter="neuropatia">Neuropatias</button>
+  <button class="filter-btn" data-filter="miopatia">Miopatias</button>
+  <button class="filter-btn" data-filter="miastenia">Miastenia Gravis</button>
+  <button class="filter-btn" data-filter="geral">Geral</button>
+</div>
+
+<!-- ARTICLES GRID -->
+<div class="articles-section">
+  <div class="articles-grid" id="grid">
+
+    <div class="article-card" data-category="geral" data-article="0">
+      <span class="card-tag">Doenças Neuromusculares</span>
+      <div class="card-body">
+        <h2>O que são Doenças Neuromusculares?</h2>
+        <p>Entenda o sistema nervoso, suas divisões e quais doenças afetam a unidade motora — desde a ELA até miastenia gravis e distrofias musculares.</p>
+      </div>
+      <div class="card-footer"><span class="card-read">Ler artigo</span><span class="card-arrow">→</span></div>
+    </div>
+
+    <div class="article-card" data-category="neuropatia" data-article="1">
+      <span class="card-tag">Neuropatias</span>
+      <div class="card-body">
+        <h2>Quais são os sintomas da neuropatia periférica?</h2>
+        <p>Como reconhecer os sintomas das neuropatias? Saiba como o sistema nervoso se divide e por que os sintomas são tão variados.</p>
+      </div>
+      <div class="card-footer"><span class="card-read">Ler artigo</span><span class="card-arrow">→</span></div>
+    </div>
+
+    <div class="article-card" data-category="neuropatia" data-article="2">
+      <span class="card-tag">Neuropatias</span>
+      <div class="card-body">
+        <h2>Neuropatia periférica é reversível?</h2>
+        <p>Causas, tipos, diagnóstico e tratamento das neuropatias periféricas. Quanto antes o diagnóstico, maiores as chances de recuperação.</p>
+      </div>
+      <div class="card-footer"><span class="card-read">Ler artigo</span><span class="card-arrow">→</span></div>
+    </div>
+
+    <div class="article-card" data-category="neuropatia" data-article="3">
+      <span class="card-tag">Neuropatias</span>
+      <div class="card-body">
+        <h2>O que é neuropatia diabética?</h2>
+        <p>Complicação comum do diabetes que pode não ter sintomas inicialmente. Entenda riscos, diagnóstico, pé diabético e cuidados essenciais.</p>
+      </div>
+      <div class="card-footer"><span class="card-read">Ler artigo</span><span class="card-arrow">→</span></div>
+    </div>
+
+    <div class="article-card" data-category="neuropatia" data-article="4">
+      <span class="card-tag">Neuropatias</span>
+      <div class="card-body">
+        <h2>O que é a síndrome de Guillain-Barré?</h2>
+        <p>Doença autoimune rara que afeta nervos periféricos com fraqueza progressiva. Conheça causas, sintomas e tratamento desta condição aguda.</p>
+      </div>
+      <div class="card-footer"><span class="card-read">Ler artigo</span><span class="card-arrow">→</span></div>
+    </div>
+
+    <div class="article-card" data-category="miastenia" data-article="5">
+      <span class="card-tag">Miastenia Gravis</span>
+      <div class="card-body">
+        <h2>Miastenia Gravis — o que é e como tratar?</h2>
+        <p>Doença autoimune rara que ataca a junção neuromuscular causando fraqueza flutuante. Diagnóstico, tratamentos disponíveis e prognóstico.</p>
+      </div>
+      <div class="card-footer"><span class="card-read">Ler artigo</span><span class="card-arrow">→</span></div>
+    </div>
+
+    <div class="article-card" data-category="miastenia" data-article="6">
+      <span class="card-tag">Miastenia Gravis</span>
+      <div class="card-body">
+        <h2>Miastenia Gravis — quais cuidados devo tomar?</h2>
+        <p>O que pode piorar os sintomas, medicações de risco, como reconhecer a crise miastênica e quando buscar atendimento urgente.</p>
+      </div>
+      <div class="card-footer"><span class="card-read">Ler artigo</span><span class="card-arrow">→</span></div>
+    </div>
+
+    <div class="article-card" data-category="miopatia" data-article="7">
+      <span class="card-tag">Miopatias</span>
+      <div class="card-body">
+        <h2>Distrofia muscular — o que é e qual o tratamento?</h2>
+        <p>Grupo de doenças genéticas que causam fraqueza progressiva. Saiba sobre sintomas, exames, complicações e tratamentos disponíveis.</p>
+      </div>
+      <div class="card-footer"><span class="card-read">Ler artigo</span><span class="card-arrow">→</span></div>
+    </div>
+
+    <div class="article-card" data-category="miopatia" data-article="8">
+      <span class="card-tag">Miopatias</span>
+      <div class="card-body">
+        <h2>O que é CPK? O que fazer quando está alterado?</h2>
+        <p>Um resultado alterado não significa necessariamente doença. Entenda quando o CPK elevado é relevante e quando não se preocupar.</p>
+      </div>
+      <div class="card-footer"><span class="card-read">Ler artigo</span><span class="card-arrow">→</span></div>
+    </div>
+
+    <div class="article-card" data-category="miopatia" data-article="9">
+      <span class="card-tag">Miopatias</span>
+      <div class="card-body">
+        <h2>O que são as miopatias?</h2>
+        <p>Miopatia não é um diagnóstico único — é um grupo amplo de doenças musculares. Conheça os tipos, desde distrofias até miopatias inflamatórias.</p>
+      </div>
+      <div class="card-footer"><span class="card-read">Ler artigo</span><span class="card-arrow">→</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <button class="modal-close" id="modal-close" aria-label="Fechar">✕</button>
+      <p class="modal-tag" id="modal-tag"></p>
+      <h2 id="modal-title"></h2>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+    <div class="modal-cta">
+      <div class="modal-author">
+        <strong>Dra. Michelle Abdo Paiva</strong>
+        Neurologista e Neuromuscular pelo HC-FMUSP<br>CRM 191302 · RQE 94288
+      </div>
+      <a href="https://api.whatsapp.com/send?phone=5511940414718&text=Ol%C3%A1%2C%20gostaria%20de%20agendar%20consulta%20com%20Dra.%20Michelle" class="btn-wpp-sm">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M20.52 3.48A11.93 11.93 0 0012 0C5.37 0 0 5.37 0 12c0 2.11.55 4.17 1.6 5.98L0 24l6.18-1.62A11.96 11.96 0 0012 24c6.63 0 12-5.37 12-12 0-3.2-1.25-6.21-3.48-8.52zM12 22c-1.85 0-3.67-.5-5.25-1.44l-.38-.22-3.9 1.02 1.04-3.8-.24-.39A9.93 9.93 0 012 12C2 6.49 6.49 2 12 2c2.67 0 5.18 1.04 7.07 2.93A9.93 9.93 0 0122 12c0 5.51-4.49 10-10 10zm5.47-7.39c-.3-.15-1.77-.87-2.04-.97-.28-.1-.48-.15-.68.15s-.78.97-.95 1.17c-.17.2-.35.22-.65.07-.3-.15-1.27-.47-2.42-1.49-.9-.8-1.5-1.79-1.68-2.09-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52s-.68-1.64-.93-2.25c-.24-.59-.49-.51-.68-.52h-.58c-.2 0-.52.07-.79.37-.28.3-1.06 1.03-1.06 2.52 0 1.48 1.08 2.92 1.23 3.12.15.2 2.13 3.25 5.16 4.56.72.31 1.28.5 1.72.64.72.23 1.38.2 1.9.12.58-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.13-.27-.2-.57-.35z"/></svg>
+        Agendar consulta
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+const articles = [
+  {
+    tag: "Doenças Neuromusculares",
+    title: "O que são Doenças Neuromusculares?",
+    body: `
+      <h3>O que é neurologia clínica?</h3>
+      <p>A neurologia clínica é a especialidade que cuida das doenças e sintomas que acometem o sistema nervoso — uma grande rede de informações que controla e coordena as ações corporais, tanto voluntárias (mover mãos, andar, falar) quanto involuntárias (respiração, batimentos cardíacos).</p>
+      <h3>Como se divide o sistema nervoso?</h3>
+      <p>O sistema nervoso se divide em <strong>central</strong> (cérebro e medula espinhal) — onde ocorrem AVC, esclerose múltipla, Parkinson e Alzheimer — e <strong>periférico</strong>, que engloba gânglios, raízes, nervos periféricos, junção neuromuscular e músculo esquelético.</p>
+      <h3>O que são doenças neuromusculares?</h3>
+      <p>São aquelas que acontecem na chamada unidade motora e no sistema nervoso periférico. Podem acometer o neurônio motor inferior, raízes e nervos periféricos, junção neuromuscular e músculo esquelético.</p>
+      <h3>Quais os sintomas?</h3>
+      <ul>
+        <li>Fraqueza muscular e atrofia</li>
+        <li>Hipertrofia de algum grupo muscular (ex: panturrilha)</li>
+        <li>Câimbras frequentes e fasciculações</li>
+        <li>Formigamento nas mãos ou pés</li>
+        <li>Dormência e perda de sensibilidade</li>
+        <li>Desequilíbrio e deformidades</li>
+        <li>Fadiga e intolerância à atividade física</li>
+      </ul>
+      <h3>Exemplos de doenças neuromusculares</h3>
+      <ul>
+        <li>Esclerose lateral amiotrófica (ELA)</li>
+        <li>Neuropatias adquiridas (ex: diabética) e hereditárias (Charcot-Marie-Tooth)</li>
+        <li>Distrofias musculares (Duchenne, Becker, Steinert, Fascioescapuloumeral, Cinturas)</li>
+        <li>Miopatias inflamatórias (dermatomiosite, polimiosite, necrotizante)</li>
+        <li>Miastenia gravis</li>
+      </ul>
+    `
+  },
+  {
+    tag: "Neuropatias",
+    title: "Quais são os sintomas da neuropatia periférica?",
+    body: `
+      <h3>Como funciona o sistema nervoso periférico?</h3>
+      <p>O sistema nervoso periférico conecta o cérebro às partes mais distantes do corpo. É formado por nervos especializados para transmitir cada tipo de informação: dor, temperatura, toque, posição corporal, força motora, funções autonômicas, entre outros.</p>
+      <h3>O que é neuropatia periférica?</h3>
+      <p>As neuropatias periféricas são um grupo amplo de doenças que têm em comum a lesão dos nervos periféricos. Algumas causas comuns: diabetes, distúrbios hormonais, deficiência de vitaminas e alcoolismo. Condições mais raras como polineuropatia amiloidótica familiar (PAF), Charcot-Marie-Tooth (CMT) e CIDP também merecem atenção.</p>
+      <h3>Quais os sintomas?</h3>
+      <p>Os sintomas dependem do tipo de nervo lesionado e da região que ele innerva. Podem incluir:</p>
+      <ul>
+        <li>Perda de sensibilidade ao toque, temperatura ou dor</li>
+        <li>Dor neuropática, formigamento, queimação, pontadas</li>
+        <li>Fraqueza muscular e perda de massa muscular</li>
+        <li>Desequilíbrio e ataxia</li>
+        <li><strong>Sintomas autonômicos:</strong> constipação, diarreia, retenção urinária, disfunção erétil, queda de pressão ao levantar</li>
+      </ul>
+      <p>Talvez o sintoma mais conhecido seja o formigamento nos pés — mas nem toda neuropatia tem dor neuropática. Os sintomas são muito diversos.</p>
+    `
+  },
+  {
+    tag: "Neuropatias",
+    title: "Neuropatia periférica é reversível?",
+    body: `
+      <h3>O que é neuropatia periférica?</h3>
+      <p>Neuropatia periférica é um termo genérico que indica lesão dos nervos do sistema nervoso periférico. Os nervos funcionam como cabos elétricos: o axônio conduz o impulso e a mielina é a capa isolante que acelera a transmissão.</p>
+      <h3>Quais tipos existem?</h3>
+      <p><strong>Por quantidade de nervos acometidos:</strong> mononeuropatia (1 nervo), mononeuropatia múltipla (vários, assimétrica) ou polineuropatia (vários, simultânea).</p>
+      <p><strong>Por função acometida:</strong> motora, sensitiva, sensitiva e motora, ou autonômica.</p>
+      <p><strong>Por tempo:</strong> aguda (até 1 mês), subaguda (1–2 meses) ou crônica (mais de 2 meses).</p>
+      <h3>Causas</h3>
+      <ul>
+        <li><strong>Adquiridas:</strong> traumáticas, compressivas (túnel do carpo), tóxicas (álcool, medicamentos), metabólicas (diabetes, tireoide), infecciosas (hanseníase), autoimunes (CIDP)</li>
+        <li><strong>Hereditárias:</strong> Charcot-Marie-Tooth e outras síndromes genéticas</li>
+        <li><strong>Idiopáticas:</strong> sem causa identificada após investigação ampla</li>
+      </ul>
+      <h3>Como é o diagnóstico?</h3>
+      <p>Por meio de avaliação médica detalhada com exame neurológico, eletroneuromiografia, ultrassom de nervos, exames de sangue e urina. Em casos com suspeita genética, testes específicos podem ser indicados.</p>
+      <h3>É possível reverter?</h3>
+      <p>Depende da causa. Os nervos podem se regenerar, mas de forma lenta — meses a anos. Diagnóstico correto e tratamento precoce melhoram muito as chances:</p>
+      <ul>
+        <li><strong>Lesões compressivas ou traumáticas:</strong> podem ter excelente recuperação com cirurgia precoce</li>
+        <li><strong>Neuropatia diabética:</strong> o controle dos fatores de risco desacelera a progressão</li>
+        <li><strong>Deficiência de vitamina B12:</strong> pode ser completamente revertida com tratamento precoce</li>
+      </ul>
+      <p><strong>Mensagem final:</strong> quanto mais cedo buscar ajuda, maiores as chances de melhora.</p>
+    `
+  },
+  {
+    tag: "Neuropatias",
+    title: "O que é neuropatia diabética?",
+    body: `
+      <h3>O que é?</h3>
+      <p>A neuropatia diabética é a lesão dos nervos periféricos causada pelo diabetes. É uma complicação comum — até metade dos pacientes pode desenvolvê-la. O principal fator de risco é o descontrole do diabetes associado a obesidade, hipertensão e dislipidemia.</p>
+      <h3>Quais os sintomas?</h3>
+      <p>Começam de forma lenta após alguns anos do diagnóstico. Importante: até metade dos pacientes pode não ter nenhum sintoma!</p>
+      <p>Quando presentes, os sintomas incluem perda de sensibilidade, formigamento, queimação e dormência — começando nos pés e subindo gradualmente. As queixas de dor neuropática costumam ser piores à noite.</p>
+      <h3>Como é o diagnóstico?</h3>
+      <p>Baseado na história do paciente, exame neurológico e, em alguns casos, eletroneuromiografia. Atenção: nem todo formigamento em diabéticos é causado pelo diabetes. Outras causas devem ser descartadas — é um diagnóstico de exclusão.</p>
+      <h3>O que é pé diabético?</h3>
+      <p>A perda de sensibilidade protetora associada a problemas de vascularização pode resultar em lesões, úlceras e infecções nos pés. O rastreio deve ser feito anualmente com o exame do pé diabético.</p>
+      <h3>Tratamento e cuidados</h3>
+      <ol>
+        <li>Melhorar o controle do diabetes e fatores de risco associados</li>
+        <li>Praticar atividade física regular — pode melhorar sintomas e regenerar fibras nervosas</li>
+        <li>Cuidado com os pés: atenção a machucados, unhas e calçados</li>
+        <li>Acompanhamento médico regular</li>
+      </ol>
+      <p>Para dor neuropática, existem medicamentos da classe de anticonvulsivantes e antidepressivos que podem ajudar.</p>
+    `
+  },
+  {
+    tag: "Neuropatias",
+    title: "O que é a síndrome de Guillain-Barré?",
+    body: `
+      <h3>O que é?</h3>
+      <p>A síndrome de Guillain-Barré é uma doença rara e autoimune que ataca vários nervos periféricos e suas raízes — uma polirradiculoneurite inflamatória aguda. É considerada uma emergência neurológica.</p>
+      <h3>Por que acontece?</h3>
+      <p>Geralmente precedida por um quadro infeccioso (gripe, Zika vírus, Campylobacter) que desencadeia uma resposta imune cruzada: o sistema imunológico passa a atacar também a bainha dos nervos periféricos. Pode ocorrer raramente após vacinas.</p>
+      <h3>Quais os sintomas?</h3>
+      <p>Formigamento e fraqueza que começam nos pés e vão subindo progressivamente, podendo atingir os quatro membros. Pode haver perda de reflexos e alteração da sensibilidade. Evolui em média em até 4 semanas.</p>
+      <p>Até 30% dos casos podem evoluir gravemente, com comprometimento dos músculos da respiração e necessidade de intubação.</p>
+      <h3>Tratamento</h3>
+      <p>Consiste em imunoglobulina ou plasmaférese para remover os anticorpos que atacam os nervos, além de suporte clínico para prevenir complicações e reabilitação precoce.</p>
+      <h3>Quanto tempo para melhorar?</h3>
+      <p>Em média, ao final de 6 meses, entre 60–80% dos pacientes voltam a andar. O tempo varia conforme a gravidade, a idade e outros fatores. A recorrência acontece em 2–5% dos casos.</p>
+    `
+  },
+  {
+    tag: "Miastenia Gravis",
+    title: "Miastenia Gravis — o que é e como tratar?",
+    body: `
+      <h3>O que é?</h3>
+      <p>A miastenia gravis é uma doença rara e autoimune onde anticorpos atacam a junção neuromuscular — o ponto de comunicação entre nervo e músculo. Por ser rara, pode demorar anos até o diagnóstico correto.</p>
+      <h3>Por que acontece?</h3>
+      <p>Envolve predisposição genética, influência hormonal (maior prevalência em mulheres) e fatores ambientais ainda desconhecidos. Em alguns casos, há relação com tumor do timo. Nenhum paciente tem como prever ou evitar a doença.</p>
+      <h3>Quais os sintomas?</h3>
+      <p>Fraqueza que <strong>piora ao longo do dia e após esforço</strong>, com importante acometimento dos olhos. Os sintomas flutuam — a pessoa pode estar bem e logo depois sentir fraqueza.</p>
+      <ul>
+        <li>Queda da pálpebra (ptose palpebral)</li>
+        <li>Visão dupla</li>
+        <li>Fraqueza nos braços e pernas</li>
+        <li>Cansaço para mastigar, falar ou engolir</li>
+        <li>Falta de ar aos esforços</li>
+      </ul>
+      <h3>Como é o diagnóstico?</h3>
+      <p>Depende de exame neurológico compatível, pesquisa de autoanticorpos (anti-AchR e anti-Musk), eletroneuromiografia com estimulação repetitiva e tomografia do tórax para avaliar o timo.</p>
+      <h3>Tratamento</h3>
+      <ul>
+        <li><strong>Melhora sintomática:</strong> piridostigmina</li>
+        <li><strong>Imunossupressão:</strong> prednisona, azatioprina, rituximab, entre outros</li>
+        <li><strong>Crises graves:</strong> imunoglobulina ou plasmaférese</li>
+        <li><strong>Cirurgia:</strong> timectomia em casos selecionados</li>
+      </ul>
+      <p>Miastenia gravis não tem cura, mas é tratável. O diagnóstico correto é fundamental para a qualidade de vida dos pacientes.</p>
+    `
+  },
+  {
+    tag: "Miastenia Gravis",
+    title: "Miastenia Gravis — quais cuidados devo tomar?",
+    body: `
+      <h3>O que pode piorar os sintomas?</h3>
+      <ol>
+        <li><strong>Medicações de risco:</strong> informe sempre todos os profissionais de saúde sobre a doença. Alguns antibióticos (ciprofloxacino), benzodiazepínicos e relaxantes musculares podem piorar a miastenia.</li>
+        <li><strong>Procedimentos cirúrgicos e anestesias:</strong> bloqueadores neuromusculares devem ser evitados. Avise previamente qualquer equipe de anestesia.</li>
+        <li><strong>Vacinação em dia:</strong> qualquer infecção pode desencadear pioras. Vacinas contra gripe e pneumonia são recomendadas.</li>
+        <li><strong>Reconhecer sintomas de piora:</strong> falta de ar, fraqueza para fala, mastigação ou engolir podem indicar evolução para crise miastênica.</li>
+      </ol>
+      <h3>O que é a crise miastênica?</h3>
+      <p>É quando há piora importante da miastenia com necessidade de intubação, por comprometimento dos músculos da respiração. Requer internação imediata.</p>
+      <ul>
+        <li>Pode ser desencadeada por infecções, medicamentos, estresse, cirurgias ou mudança no tratamento</li>
+        <li>Surge ao longo de dias: piora da fraqueza, dificuldade para falar, mastigar, engolir e respirar</li>
+        <li>Acontece em cerca de 20–30% dos pacientes ao longo da doença</li>
+        <li>Tem tratamento específico — na suspeita, busque atendimento hospitalar imediatamente</li>
+      </ul>
+    `
+  },
+  {
+    tag: "Miopatias",
+    title: "Distrofia muscular — o que é e qual o tratamento?",
+    body: `
+      <h3>O que é?</h3>
+      <p>Distrofia muscular é um termo amplo que engloba um grupo variado de doenças musculares de origem genética, com perda de força progressiva. Nem sempre existe histórico familiar — o paciente pode ser o primeiro caso na família.</p>
+      <h3>Com que idade começam os sintomas?</h3>
+      <p>Desde a infância (Duchenne inicia por volta de 2–3 anos) até a idade adulta (distrofia miotônica de Steinert costuma iniciar após os 20 anos).</p>
+      <h3>Quais os sintomas?</h3>
+      <ul>
+        <li>Fraqueza muscular progressiva</li>
+        <li>Perda de massa muscular e atrofia</li>
+        <li>Quedas frequentes, dificuldade para correr ou levantar do chão</li>
+        <li>Caminhar na ponta dos pés</li>
+      </ul>
+      <h3>Possíveis complicações</h3>
+      <ul>
+        <li>Escoliose, retrações articulares</li>
+        <li>Fraqueza respiratória (pode precisar de BIPAP)</li>
+        <li>Ronco e apneia do sono</li>
+        <li>Arritmias cardíacas e cardiopatias</li>
+      </ul>
+      <h3>As 5 principais distrofias</h3>
+      <ol>
+        <li>Distrofia Muscular de Duchenne</li>
+        <li>Distrofia Muscular de Becker</li>
+        <li>Distrofia Miotônica tipo 1 (Steinert)</li>
+        <li>Distrofia Fascioescapuloumeral</li>
+        <li>Distrofia de Cinturas (mais de 30 genes identificados)</li>
+      </ol>
+      <h3>Tratamento</h3>
+      <p>Baseado em reabilitação multiprofissional (neurologista, fisioterapeuta, fonoaudiólogo, terapeuta ocupacional) e tratamento precoce das complicações. Para Duchenne, há benefício de corticoides e medicamentos que atuam na produção da distrofina.</p>
+      <p>Nem toda distrofia leva à cadeira de rodas — o diagnóstico correto é fundamental para orientar o prognóstico e garantir qualidade de vida.</p>
+    `
+  },
+  {
+    tag: "Miopatias",
+    title: "O que é CPK? O que fazer quando está alterado?",
+    body: `
+      <h3>O que é CPK?</h3>
+      <p>CPK (creatinofosfoquinase) é uma enzima presente no interior das células musculares. Sua dosagem faz parte da investigação inicial de várias doenças musculares. Os valores normais variam conforme o sexo.</p>
+      <h3>Quando pode estar aumentada?</h3>
+      <ul>
+        <li>Após treinamento de musculação intenso ou corridas</li>
+        <li>Uso de medicamentos que afetam o músculo (como estatinas)</li>
+        <li>Distrofias musculares, miopatias metabólicas e miopatias inflamatórias</li>
+      </ul>
+      <p>Um resultado alterado não significa necessariamente uma doença muscular!</p>
+      <h3>CPK elevado indica sempre miopatia inflamatória?</h3>
+      <p>Não. Miopatias inflamatórias (polimiosite, dermatomiosite, miosite por corpos de inclusão, miopatia necrotizante) cursam com CPK elevada — mas muitas outras condições também podem elevar esse exame.</p>
+      <h3>O que fazer?</h3>
+      <p>Verifique se houve repouso de pelo menos 3 dias de atividade física antes da coleta. Os exames sempre devem ser interpretados em conjunto com a história e o exame neurológico do paciente. Busque avaliação com especialista em neuromuscular para o diagnóstico correto.</p>
+    `
+  },
+  {
+    tag: "Miopatias",
+    title: "O que são as miopatias?",
+    body: `
+      <h3>O que significa miopatia?</h3>
+      <p>Miopatia é um termo que indica um problema no músculo — não é um diagnóstico único, mas um grupo amplo de doenças diferentes. O sintoma predominante é fraqueza muscular, que pode afetar músculos proximais (levantar braços, subir escadas) ou distais (levantar os pés, usar as mãos).</p>
+      <h3>Tipos de miopatias</h3>
+      <p><strong>Hereditárias/genéticas:</strong></p>
+      <ul>
+        <li>Distrofias musculares (Cinturas, Steinert, Duchenne, Becker, Fascioescapuloumeral)</li>
+        <li>Miopatias congênitas (central core, nemalínica, centronuclear)</li>
+        <li>Miopatias metabólicas (Doença de Pompe, McArdle, mitocondriopatias)</li>
+        <li>Canalopatias (miotonia congênita, paralisia periódica)</li>
+      </ul>
+      <p><strong>Adquiridas:</strong></p>
+      <ul>
+        <li>Tóxicas e medicamentosas (miopatia por estatinas)</li>
+        <li>Inflamatórias (dermatomiosite, polimiosite, miosite com corpos de inclusão, miopatia necrotizante)</li>
+        <li>Infecciosas e endócrinas</li>
+      </ul>
+      <p>O diagnóstico correto é fundamental para orientar o tratamento e o prognóstico de cada paciente.</p>
+    `
+  }
+];
+
+// Filter
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const filter = btn.dataset.filter;
+    document.querySelectorAll('.article-card').forEach(card => {
+      const cat = card.dataset.category;
+      const show = filter === 'all' || cat === filter;
+      card.dataset.hidden = show ? 'false' : 'true';
+    });
+  });
+});
+
+// Modal
+const overlay = document.getElementById('modal-overlay');
+const modalTag = document.getElementById('modal-tag');
+const modalTitle = document.getElementById('modal-title');
+const modalBody = document.getElementById('modal-body');
+
+document.querySelectorAll('.article-card').forEach(card => {
+  card.addEventListener('click', () => {
+    const idx = parseInt(card.dataset.article);
+    const a = articles[idx];
+    modalTag.textContent = a.tag;
+    modalTitle.textContent = a.title;
+    modalBody.innerHTML = a.body;
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  });
+});
+
+document.getElementById('modal-close').addEventListener('click', closeModal);
+overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+function closeModal() {
+  overlay.classList.remove('open');
+  document.body.style.overflow = '';
+}
+</script>
+</body>
+</html>
