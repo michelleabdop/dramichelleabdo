@@ -415,9 +415,22 @@
 
     /* ── MOBILE ────────────────────────────────────────────── */
     @media (max-width: 820px) {
-      .hero { grid-template-columns: 1fr; }
-      .hero-img { height: 50vw; }
-      .hero-strip { grid-column: 1; }
+      .hero {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+        min-height: unset;
+      }
+      .hero-img {
+        order: -1;
+        height: 72vw;
+        max-height: 420px;
+      }
+      .hero-text {
+        padding: 2.5rem 6% 2rem;
+      }
+      .hero-title { font-size: clamp(2.2rem, 8vw, 3rem); }
+      .hero-mission { font-size: .95rem; max-width: 100%; }
+      .hero-strip { grid-column: 1; font-size: .68rem; padding: 0 6%; flex-wrap: wrap; height: auto; padding-top: .6rem; padding-bottom: .6rem; gap: .3rem; }
       .formacao-inner { grid-template-columns: 1fr; gap: 3rem; }
       .consultas-grid { grid-template-columns: 1fr; }
       .nav-links { display: none; }
@@ -514,6 +527,14 @@
 
     <div class="espec-card">
       <div class="espec-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+      </div>
+      <h3>Miastenia Gravis</h3>
+      <p>Diagnóstico e tratamento da miastenia gravis — doença autoimune rara que afeta a junção neuromuscular causando fraqueza flutuante, ptose palpebral e fadiga muscular progressiva.</p>
+    </div>
+
+    <div class="espec-card">
+      <div class="espec-icon">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
       </div>
       <h3>Segunda Opinião</h3>
@@ -593,7 +614,7 @@
     </div>
     <div class="consulta-card">
       <h3>Telemedicina</h3>
-      <p>Consultas por videochamada para pacientes em todo o Brasil, com praticidade, segurança e atendimento personalizado, em conformidade com as normas do Conselho Federal de Medicina (CFM).</p>
+      <p>Consultas por videochamada para pacientes em qualquer cidade do Brasil. Mesma qualidade do atendimento presencial, com toda a praticidade e segurança da plataforma homologada pelo CFM.</p>
     </div>
   </div>
 
