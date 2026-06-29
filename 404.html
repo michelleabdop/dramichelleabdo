@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Redirecionando...</title>
+  <script>
+    const redirects = {
+      '/forma%C3%A7%C3%A3o': '/#formacao',
+      '/formação':           '/#formacao',
+      '/formacao':           '/#formacao',
+      '/artigos':            '/dramichelleabdo-artigos.html',
+      '/redes-sociais':      '/#redes',
+      '/locais-de-atua%C3%A7%C3%A3o': '/dramichelleabdo-locais.html',
+      '/locais-de-atuação':  '/dramichelleabdo-locais.html',
+      '/consultas':          '/#consultas',
+    };
+
+    const path = window.location.pathname.replace(/\/dramichelleabdo/, '') || '/';
+    const dest = redirects[path];
+
+    if (dest) {
+      window.location.replace('https://www.dramichelleabdo.com' + dest);
+    } else {
+      window.location.replace('https://www.dramichelleabdo.com/index.html');
+    }
+  </script>
+</head>
+<body></body>
+</html>
